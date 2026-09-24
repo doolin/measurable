@@ -5,19 +5,18 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
+
 - **Refresh the README** — It still names NMatrix as
   supported (lines 7–12, 63, 72), shows a dead Travis badge
   and a Code Climate badge for `agarie/measurable`, and
   claims testing on MRI 1.9.3–2.1 and Rubinius. Rewrite
   those passages to match the fork and Ruby 4, and keep the
   credit to `reddavis`. Roadmap milestone 1.
-
 - **Replace Travis with GitHub Actions** — `.travis.yml` is
-  dead. Add a workflow that runs `bundle exec rake` on the
-  Ruby versions the gemspec claims to support. Roadmap
+  dead. Add a workflow that runs `bundle exec rake` on Ruby
+  4.0, the gemspec's floor (see `adr.md`). Roadmap
   milestone 2.
-- **Gemspec metadata** — Raise `required_ruby_version` from
-  `>= 1.9.3`. Point authors, email and homepage at the fork
+- **Gemspec metadata** — Point authors, email and homepage at the fork
   chain in `AGENTS.md` instead of `agarie/measurable`.
   Remove `gem.date`, which Bundler no longer uses. Not a
   blocker: the 2026-09-23 baseline installs without it.

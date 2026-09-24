@@ -77,6 +77,8 @@ only your own thread file — never bulk-read the directory.
 - A fork: `origin` is `doolin/measurable`, `upstream` is
   `generall/measurable`, and the gem itself descends from
   `reddavis/Distance-Measures`. Push to `origin` only.
+- Not published to rubygems.org, by decision (see
+  `.development/adr.md`). Never run `rake release`.
 - `bundle exec rake` runs the specs under `spec/`.
 - `Gemfile.lock` is ignored, as usual for a gem, so a dependency
   upgrade lands as a change to `measurable.gemspec`, and a lockfile

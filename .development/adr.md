@@ -10,6 +10,40 @@ the unit.
 <!-- Decided: "## YYYY-MM-DD — Title" sections below, newest
      first. -->
 
+## 2026-09-23 — Do not publish this fork
+
+**Context.** rubygems.org has `measurable` 0.0.1–0.0.9 and
+0.0.11 (no 0.0.10; checked 2026-09-23).
+`lib/measurable/version.rb` here says 0.0.10, behind that
+line, and the rubygems name is presumably held by upstream.
+
+**Decision.** This fork is not published to rubygems.org,
+per the operator. Anyone who wants it consumes it from git.
+
+**Consequences.** Never run `rake release`. The
+`bundler/gem_tasks` task is still defined through the
+Rakefile. The version number carries no release meaning
+here, and it does not need to stay ahead of rubygems.
+
+## 2026-09-23 — Support Ruby 4.0 and later
+
+**Context.** The gemspec claimed `required_ruby_version >=
+1.9.3`, a floor nobody has tested in a decade. The revival
+was verified only on Ruby 4.0.7, which `.ruby-version` pins
+for development. Supporting 3.2 through 3.4 as well was
+considered. It would have meant adding each of those
+versions to the CI matrix.
+
+**Decision.** `required_ruby_version = '>= 4.0'`, chosen by
+the operator.
+
+**Consequences.** A build of this fork will not install on
+Ruby 3.x. CI needs only one Ruby at first. Lowering the
+floor later is easy, but each version added needs a passing
+CI run. This fork is never published (see the decision
+above), so the floor affects only people building from
+git.
+
 ## 2026-09-23 — Declare `matrix`, drop the `pry` require
 
 **Context.** `lib/measurable/mvdm.rb` required `matrix` and

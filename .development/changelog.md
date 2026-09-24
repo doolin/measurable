@@ -5,6 +5,9 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — Raised `required_ruby_version` from
+  `>= 1.9.3` to `>= 4.0`.
+
 - 2026-09-23 — Pinned the development Ruby to 4.0.7 with
   `.ruby-version`.
 

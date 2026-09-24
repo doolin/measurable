@@ -8,10 +8,12 @@ enough to lift: playbooks and skills harvest this file.
 ## Taking a baseline of a long-dormant gem
 
 - **Select the Ruby explicitly.** The rvm default on this
-  machine is 4.0.1, the repo has no `.ruby-version`, and an
-  agent's shell never runs rvm's `cd` hook. Run each command
-  as `rvm 4.0.7 do <command>`. Otherwise the baseline is for
-  the wrong Ruby.
+  machine is 4.0.1. An agent's shell never runs rvm's `cd`
+  hook, so it keeps that default even though the repo now
+  has a `.ruby-version` (4.0.7, added 2026-09-23). Run each
+  command as `rvm 4.0.7 do <command>`. Otherwise the results
+  are for the wrong Ruby. An interactive shell that `cd`s in
+  does pick up 4.0.7.
 - **Set the stale lockfile aside first.** A gem's
   `Gemfile.lock` is git-ignored, so the one on disk belongs
   to this machine, not the project. Resolving against it

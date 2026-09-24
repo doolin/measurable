@@ -29,7 +29,7 @@ module Measurable
       elsif @measure
         @measure.distance(coordinates, other.coordinates)
       else
-        throw 'No measure specified'
+        raise ArgumentError, 'No measure specified'
       end
     end
 

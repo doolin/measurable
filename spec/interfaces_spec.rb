@@ -18,8 +18,16 @@ describe 'Interface for distance functions' do
   end
 
   it 'calculates overlap distance' do
-    d = @x.distance(@y) { |x| x.reduce(0) { |sum, a| sum + (a[0] - a[1]).abs } }
-    expect(d).to be(2)
+    d = [1, 5].distance([2, 2]) { |u, v| u.zip(v).reduce(0) { |sum, (a, b)| sum + (a - b).abs } }
+    expect(d).to be(4)
+  end
+
+  it 'raises ArgumentError when no measure is given or set' do
+    # Exact message: UncaughtThrowError (from `throw`) subclasses
+    # ArgumentError, and its message only contains this text.
+    expect { [1, 1].distance([2, 2]) }.to raise_error(
+      an_instance_of(ArgumentError).and(having_attributes(message: 'No measure specified'))
+    )
   end
 
   it 'calculates hamming distance with string' do

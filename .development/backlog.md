@@ -5,10 +5,6 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
-- **`interfaces.rb` throws a string** — `MeasurableObject#distance`
-  does `throw 'No measure specified'`, which raises
-  `UncaughtThrowError`, not a meaningful error. Should be
-  `raise ArgumentError, ...`, with a spec.
 - **Haversine unit constants** — `feet:` is
   `EARTH_RADIUS_IN_MILES * 5282`; a mile is 5280 feet. The
   mile radius (3956) and km radius (6371 km ≈ 3958.8 mi)

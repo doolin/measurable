@@ -5,6 +5,11 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-24 — `MeasurableObject#distance` raises
+  `ArgumentError` when no measure is set, instead of
+  `throw`ing a string; its overlap-distance spec no longer
+  passes by accident.
+
 - 2026-09-24 — Fixed `WeightedOverlap#feature_contribution`
   (read the never-set `@weight`); `distance` now sums it, so
   the per-feature rule lives in one place.

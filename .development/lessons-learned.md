@@ -5,6 +5,23 @@ that were only obvious in hindsight, and the methods
 worth reusing. One `##` section per theme, concrete
 enough to lift: playbooks and skills harvest this file.
 
+## Proving a new test catches the old bug
+
+A new spec is only evidence if it fails on the code it was
+written against. For a fix already committed, put the pre-fix
+file back temporarily, run the new examples, see them fail,
+then `git checkout -- <file>`. Don't use
+`git show <rev>:<path> --output=<path>` to put the file back.
+It sent the content to stdout and left the target *empty*.
+Write the old content with the file tool, or use
+`git restore --source=<rev> -- <path>`.
+
+A matcher that is too loose can pass the old code for the
+wrong reason. `raise_error(ArgumentError, /msg/)` accepted
+the old `throw`, because `UncaughtThrowError` subclasses
+`ArgumentError` and its message contains the text. Only the
+exact class and the exact message ruled it out.
+
 ## `gh` in a fork with an `upstream` remote
 
 With no default repository set, `gh` picks among the

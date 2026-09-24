@@ -15,17 +15,6 @@ that fails first, then the fix, then a ledger entry.
 
 **Defects** (wrong results or crashes on valid input):
 
-- **Cosine similarity exceeds 1** — `cosine_similarity(v, v)`
-  is > 1.0 for 26% of random vectors (10,000 tried), so
-  `cosine_distance(v, v)` is negative. The quotient
-  `dot / (‖u‖ ‖v‖)` rounds past the bound. At minimum clamp
-  to [−1, 1]. Related, the same formula loses nearly parallel
-  vectors to cancellation: `cosine_distance([1,0], [1,t])`
-  returns 0.0 for t ≤ 1e-8 (true value t²/2) and has relative
-  error 9e-5 at t = 1e-6. A cancellation-free form, such as
-  ‖u/‖u‖ − v/‖v‖‖² / 2, fixes both. And `[1e200, 1e200]`
-  against itself gives NaN, because the norms overflow; this
-  goes with the Euclidean item below.
 - **Haversine raises near antipodes** — `Math::DomainError`
   on 395 of 10,000 exactly antipodal pairs (3.95%), e.g.
   `[37.865216427464006, 35.83562198419082]` vs its antipode.

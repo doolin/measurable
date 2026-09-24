@@ -71,4 +71,53 @@ describe 'Cosine' do
       expect { Measurable.cosine_distance(@u, [1, 3, 5, 7]) }.to raise_error(ArgumentError)
     end
   end
+
+  context 'with numerically hard inputs' do
+    let(:vectors) do
+      rng = Random.new(1_414)
+      Array.new(2000) { Array.new(rng.rand(2..20)) { rng.rand(-1.0..1.0) } }
+    end
+
+    it 'keeps the similarity of a vector with itself within [-1, 1]' do
+      out_of_range = vectors.reject { |v| Measurable.cosine_similarity(v, v).between?(-1.0, 1.0) }
+      expect(out_of_range).to be_empty
+    end
+
+    it 'never gives a negative distance' do
+      negative = vectors.select { |v| Measurable.cosine_distance(v, v).negative? }
+      expect(negative).to be_empty
+    end
+
+    it 'resolves nearly parallel vectors instead of cancelling to zero' do
+      # Exact 1 - 1/sqrt(1 + t^2), rearranged so it has no cancellation.
+      inaccurate = [1e-4, 1e-6, 1e-8, 1e-9].reject do |t|
+        exact = t * t / (Math.sqrt(1 + (t * t)) * (Math.sqrt(1 + (t * t)) + 1))
+        got = Measurable.cosine_distance([1.0, 0.0], [1.0, t])
+        ((got - exact) / exact).abs < 1e-6
+      end
+      expect(inaccurate).to be_empty
+    end
+
+    it 'gives the extremes for antiparallel vectors, without passing them' do
+      s = Measurable.cosine_similarity([1.0, 2.0], [-2.0, -3.9])
+      d = Measurable.cosine_distance([1.0, 2.0], [-2.0, -3.9])
+      expect([s.between?(-1.0, -1 + 1e-3), d.between?(2 - 1e-3, 2.0)]).to eq [true, true]
+    end
+
+    it 'keeps random pairs within [-1, 1] and [0, 2]' do
+      pairs = vectors.each_slice(2).select { |u, v| u.size == v.size }
+      out_of_range = pairs.reject do |u, v|
+        Measurable.cosine_similarity(u, v).between?(-1.0, 1.0) && Measurable.cosine_distance(u, v).between?(0.0, 2.0)
+      end
+      expect(out_of_range).to be_empty
+    end
+
+    it 'does not overflow on huge components' do
+      expect(Measurable.cosine_similarity([1e200, 1e200], [1e200, 1e200])).to be_within(4 * Float::EPSILON).of(1.0)
+    end
+
+    it 'does not underflow on tiny components' do
+      expect(Measurable.cosine_similarity([3e-200, 4e-200], [4e-200, 3e-200])).to be_within(4 * Float::EPSILON).of(0.96)
+    end
+  end
 end

@@ -5,6 +5,12 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-24 — Fixed Levenshtein, which returned wrong
+  distances (kitten/sitting gave 2) and crashed on some
+  pairs. Two-row dynamic program; known-answer and
+  metric-property specs; 6,000 random comparisons agree
+  with the recursive definition.
+
 - 2026-09-24 — First GitHub Actions run green (bundler-audit,
   specs, RuboCop on Ruby 4.0.7). Roadmap milestone 2 landed.
 

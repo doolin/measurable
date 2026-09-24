@@ -47,9 +47,6 @@ The following are the similarity measures supported at the moment:
 - Modified Value Difference Metric (MVDM)
 - Weighted overlap with Information Gain and Information Gain Ratio
 
-**Known issue:** Levenshtein currently returns wrong distances for many
-inputs (kitten/sitting gives 2, not 3) and raises on some. A fix is pending.
-
 ## How to use
 
 The API I intend to support is something like this:

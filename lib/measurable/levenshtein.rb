@@ -28,25 +28,26 @@ module Measurable
       return u.size if v.size == 0
       return v.size if u.size == 0
 
-      matrix = Array.new(u.size + 1) { (0..v.size).to_a }
-
+      # Keep only two rows of the dynamic-programming table, each as long as
+      # the shorter sequence plus one. previous[i] is the distance between
+      # the first i elements of u and the first j - 1 elements of v.
       u, v = v, u if v.size < u.size
+      previous = (0..u.size).to_a
 
-      (1..u.size).each do |i|
-        (1..v.size).each do |j|
-          matrix[i][j] = if u[i] == v[j]
-                           matrix[i - 1][j - 1]
-                         else
-                           [
-                             matrix[i - 1][j] + 1,   # deletion
-                             matrix[i][j - 1] + 1,   # insertion
-                             matrix[i - 1][j - 1] + 1 # substitution
-                           ].min
-                         end
+      (1..v.size).each do |j|
+        current = [j]
+        (1..u.size).each do |i|
+          cost = u[i - 1] == v[j - 1] ? 0 : 1
+          current << [
+            previous[i] + 1,        # deletion
+            current[i - 1] + 1,     # insertion
+            previous[i - 1] + cost  # substitution, or a match
+          ].min
         end
+        previous = current
       end
 
-      matrix[u.size][v.size]
+      previous[u.size]
     end
   end
 

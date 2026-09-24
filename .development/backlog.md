@@ -5,18 +5,6 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
-- **Fix Levenshtein** — Wrong results, confirmed 2026-09-23:
-  kitten/sitting gives 2 (should be 3), flaw/lawn 1 (2),
-  a/b 0 (1), ab/ba 1 (2), and abcd/b raises `NoMethodError`.
-  In `lib/measurable/levenshtein.rb` the inner loop compares
-  `u[i] == v[j]` with 1-based `i, j` (it should compare
-  `u[i - 1]` and `v[j - 1]`), every row is initialized to
-  `0..n` (the first column should be `0..m`), and the
-  `u, v` swap runs after the matrix is sized, so indices run
-  past it. The specs pass only because each case they test
-  happens to give the right answer despite the off-by-one.
-  Add known-answer specs (the list above) before fixing,
-  and remove the README's "Known issue" note once it lands.
 - **Fix `WeightedOverlap#feature_contribution`** — It reads
   `@weight`, which is never set (the attribute is
   `@weights`), so every call raises `NoMethodError`. Nothing
@@ -39,8 +27,6 @@ when it becomes active.
   that script into the repo (a spec that compares against a
   checked-in golden file, or a `script/` tool), so any
   future refactor of the numerical code gets the same check.
-  Fix Levenshtein first, or the golden file records its
-  wrong answers.
 - **Clear the rest of `.rubocop_todo.yml`** — 430 offenses
   remain after the 2026-09-23 pass, none autocorrected on
   purpose:

@@ -27,3 +27,5 @@ jobs:
         run: bundle exec bundle-audit check --update
       - name: Run the default task
         run: bundle exec rake
+      - name: RuboCop
+        run: bundle exec rubocop

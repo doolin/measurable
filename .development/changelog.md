@@ -5,6 +5,11 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — RuboCop brought forward to 1.91 with the
+  performance and rspec plugins: config regenerated, safe
+  corrections applied (765 → 430 offenses) with outputs
+  verified bit-identical, and a RuboCop step added to CI.
+
 - 2026-09-23 — Gemspec metadata points at this fork: authors
   (Agarie, generall, Doolin), email, homepage, a description
   distinct from the summary; dropped `gem.date`. `gem build`

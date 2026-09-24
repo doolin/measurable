@@ -18,11 +18,6 @@ Lint/ConstantDefinitionInBlock:
   Exclude:
     - 'spec/interfaces_spec.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Lint/UselessAssignment:
-  Exclude:
-    - 'lib/measurable/weighted_overlap.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:
   Max: 50

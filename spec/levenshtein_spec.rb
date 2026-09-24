@@ -39,7 +39,7 @@ describe Measurable::Levenshtein do
     end
   end
 
-  context 'known answers' do
+  context 'with known answers' do
     {
       %w[kitten sitting] => 3,
       %w[sitting kitten] => 3,
@@ -62,7 +62,7 @@ describe Measurable::Levenshtein do
     end
   end
 
-  context 'metric properties on random strings' do
+  context 'with random strings, as a metric' do
     let(:words) do
       rng = Random.new(1_729)
       Array.new(40) { Array.new(rng.rand(0..7)) { %w[a b c].sample(random: rng) }.join }
@@ -90,7 +90,7 @@ describe Measurable::Levenshtein do
     end
   end
 
-  context 'against the recursive definition' do
+  context 'when checked against the recursive definition' do
     # An independent oracle: the textbook recurrence over prefixes,
     # memoized. d(i, j) is the distance between the first i elements of
     # a and the first j elements of b. It shares no code with the

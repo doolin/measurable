@@ -47,9 +47,11 @@ when it becomes active.
   that script into the repo (a spec that compares against a
   checked-in golden file, or a `script/` tool), so any
   future refactor of the numerical code gets the same check.
-- **Clear the rest of `.rubocop_todo.yml`** — 430 offenses
-  remain after the 2026-09-23 pass, none autocorrected on
-  purpose:
+- **Clear the rest of `.rubocop_todo.yml`** — 443 offenses
+  remain as of 2026-09-24 (430 after the 2026-09-23 pass;
+  the bug-fix specs added some, mostly `RSpec/InstanceVariable`
+  and `RSpec/ExampleLength` in files already built on
+  `before :all`), none autocorrected on purpose:
   - `RSpec/InstanceVariable` (230), `RSpec/BeforeAfterAll`,
     `RSpec/MultipleExpectations`: restructure specs to `let`
     and one behavior per example.

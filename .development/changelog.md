@@ -1,9 +1,48 @@
 # Changelog
 
-Shipped work worth recording — one dated line per item,
-newest first. When an item leaves `todo.md` finished, note it
+Shipped work worth recording — a defect ledger, then one
+dated line per item, newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
+
+## Defect ledger
+
+Every defect fixed, numbered in the order fixed, with its
+commit. Keep the count current: add an entry in the same
+commit as the fix. A defect is behavior that was wrong
+before the fix — not modernization, style, or cleanup.
+
+**Count: 13** — code 7, tests 2, dependencies and build 4.
+
+### In the gem's code
+
+| # | Defect | Commit |
+|---|---|---|
+| 1 | `mvdm.rb` required `pry` at load; loading the gem without `pry` raised `LoadError` | `4cdf070` |
+| 2 | `mvdm.rb` required `matrix` without declaring it; `LoadError` under Bundler on Ruby ≥ 3.1 | `4cdf070` |
+| 3 | Levenshtein returned wrong distances (kitten/sitting → 2) and crashed on some pairs | `d6ce1c0` |
+| 4 | `WeightedOverlap#feature_contribution` read never-set `@weight`; always `NoMethodError` | `54dbd58` |
+| 5 | `MeasurableObject#distance` `throw`ed a string instead of raising | `d3f8f26` |
+| 6 | Haversine `:feet` used 5282 ft per mile | `3aa72f5` |
+| 7 | Haversine mile radius inconsistent with km radius (~0.07%) | `3aa72f5` |
+
+### In the specs
+
+| # | Defect | Commit |
+|---|---|---|
+| 8 | MVDM Marshal spec discarded the restored metric; checked only that nothing raised | `062b775` |
+| 9 | Overlap-distance spec passed by accident (read Integer bits) | `d3f8f26` |
+
+### In dependencies and build
+
+| # | Defect | Commit |
+|---|---|---|
+| 10 | Unused `nmatrix` runtime dependency; C extension fails to build, `bundle install` failed | `927b775` |
+| 11 | `rake ~> 10.1` cannot start on Ruby 4.0 (`ostruct` no longer a default gem) | `94f0236` |
+| 12 | `rdoc ~> 4.1` pinned 4.3.0, with CVE-2021-31799 (High) and CVE-2024-27281 (Medium) | `ae7989e` |
+| 13 | Rakefile named the `fivefish` RDoc generator, which nothing provides | `ae7989e` |
+
+## Log
 
 - 2026-09-24 — Haversine units derived from one radius:
   miles = km / 1.609344, feet = miles × 5280 (was 5282).

@@ -44,6 +44,10 @@ before the fix — not modernization, style, or cleanup.
 
 ## Log
 
+- 2026-09-24 — `minkowski(u, v, p = 1)`: the full Lp family,
+  p > 0 through infinity, scaled against overflow and
+  underflow. Default results unchanged.
+
 - 2026-09-24 — Haversine units derived from one radius:
   miles = km / 1.609344, feet = miles × 5280 (was 5282).
   `:km` and `:meters` results unchanged; `:miles` rise about

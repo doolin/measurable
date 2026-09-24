@@ -10,6 +10,30 @@ the unit.
 <!-- Decided: "## YYYY-MM-DD — Title" sections below, newest
      first. -->
 
+## 2026-09-24 — Minkowski takes an order p
+
+**Context.** `minkowski(u, v)` computed only the L1
+(city-block) distance, though the Minkowski distance is the
+family of Lp distances. The operator asked for the whole
+family.
+
+**Decision.** `minkowski(u, v, p = 1)`. Any real p > 0 is
+accepted, and `Float::INFINITY` gives the Chebyshev
+distance. For 0 < p < 1 the result is defined but is not a
+metric, and the method documentation says so. A non-numeric,
+NaN, zero or negative p raises `ArgumentError`. General p is
+computed as m · (Σ (|dᵢ|/m)ᵖ)^(1/p), with m the largest
+|dᵢ|, so it neither overflows nor underflows where the plain
+sum of powers would.
+
+**Consequences.** Existing calls, and the `cityblock` and
+`manhattan` aliases, keep p = 1 through the unchanged
+left-to-right sum: results are bit-identical, and Integer
+inputs still give an Integer. At p = 2 the result agrees
+with `euclidean` to a few ulps, and stays finite where
+`euclidean`'s sum of squares overflows. At p = ∞ it equals
+`chebyshev` exactly.
+
 ## 2026-09-23 — Do not publish this fork
 
 **Context.** rubygems.org has `measurable` 0.0.1–0.0.9 and

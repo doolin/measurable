@@ -76,10 +76,9 @@ module Measurable
       @label_count.default = nil
     end
 
-    # calculate distance dontribution by features +f1+ and +f2+ with index +idx+
+    # calculate distance contribution by features +f1+ and +f2+ with index +idx+
     def feature_contribution(f1, f2, idx)
-      weight = @weight[idx]
-      dist = f1 == f2 ? 0.0 : weight
+      f1 == f2 ? 0.0 : @weights[idx]
     end
 
     # call-seq:
@@ -114,7 +113,7 @@ module Measurable
         a = data.first[0]
         b = data.first[1]
         i = data.last
-        sum + (a == b ? 0.0 : @weights[i])
+        sum + feature_contribution(a, b, i)
       end
     end
   end

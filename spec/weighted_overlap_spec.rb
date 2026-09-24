@@ -46,6 +46,28 @@ describe 'WeightedOverlap distance' do
     expect(w[2]).to be_within(1e-1).of(0.5) # 0.55449231
   end
 
+  it 'contributes nothing for a matching feature' do
+    wo = Measurable::WeightedOverlap.new(@data, @labels)
+    expect(wo.feature_contribution(:b, :b, 1)).to eq 0.0
+  end
+
+  it 'contributes the feature weight for a mismatched feature' do
+    wo = Measurable::WeightedOverlap.new(@data, @labels)
+    expect(wo.feature_contribution(:b, :c, 1)).to eq wo.weights[1]
+  end
+
+  it 'sums the feature contributions into the distance' do
+    wo = Measurable::WeightedOverlap.new(@data, @labels)
+    a = %i[a c b]
+    b = %i[g b c]
+    # Sum left to right, as distance does; Array#sum compensates and can
+    # differ in the last bit.
+    contributions = a.zip(b).each_with_index.reduce(0.0) do |acc, ((x, y), i)|
+      acc + wo.feature_contribution(x, y, i)
+    end
+    expect(wo.distance(a, b)).to eq contributions
+  end
+
   it 'calculates weighted distance' do
     wo = Measurable::WeightedOverlap.new(@data, @labels)
     d = wo.distance(%i[a c b], %i[g b c])

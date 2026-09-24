@@ -5,6 +5,10 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-24 — Fixed `WeightedOverlap#feature_contribution`
+  (read the never-set `@weight`); `distance` now sums it, so
+  the per-feature rule lives in one place.
+
 - 2026-09-24 — Fixed Levenshtein, which returned wrong
   distances (kitten/sitting gave 2) and crashed on some
   pairs. Two-row dynamic program; known-answer and

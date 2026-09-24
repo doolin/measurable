@@ -5,11 +5,6 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
-- **Fix `WeightedOverlap#feature_contribution`** — It reads
-  `@weight`, which is never set (the attribute is
-  `@weights`), so every call raises `NoMethodError`. Nothing
-  in the repo calls it. Either fix it (`@weights[idx]`, and
-  return the ternary) or delete it as dead public API.
 - **`interfaces.rb` throws a string** — `MeasurableObject#distance`
   does `throw 'No measure specified'`, which raises
   `UncaughtThrowError`, not a meaningful error. Should be

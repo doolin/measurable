@@ -10,6 +10,36 @@ the unit.
 <!-- Decided: "## YYYY-MM-DD — Title" sections below, newest
      first. -->
 
+## 2026-09-24 — Haversine computes 1 − a without subtraction
+
+**Context.** The haversine formula takes the central angle
+as 2·atan2(√a, √(1 − a)). Near antipodal points a is close
+to 1, so `1 - a` keeps only half the digits, and the error is
+about √ε times the distance: up to 3.6×10⁷ ε, or 13 cm on
+20,000 km, against a 60-digit reference. The operator asked
+for the better formula, with the old one kept as an option.
+
+**Decision.** `haversine(u, v, unit, formula: :split)`.
+`:split`, the default, keeps the classic a (accurate for
+nearby points) and computes its complement as
+cos²(Δφ/2)·cos²(Δλ/2) + sin²((φ₁+φ₂)/2)·sin²(Δλ/2), a sum
+of nonnegative terms. `:classic` is the formula at `2c4b52d`,
+bit-identical to it. Any other value raises `ArgumentError`.
+Writing a in the same split form was tried and rejected: its
+(φ₁+φ₂)/2 argument adds a rounding that near the poles cost
+16.7 ε at short range, against 6.5 ε for the product form.
+
+**Consequences.** Maximum error against the reference: near
+antipodes 1.4 ε, exact antipodes 0.5 ε, random pairs 11 ε,
+pairs within 1 m 7 ε (the floor, shared by both formulas,
+comes from converting latitudes to radians). Default results
+move by a few ulps everywhere; callers who need the old bits
+pass `formula: :classic`. The Vincenty (atan2 of cross and
+dot) form was not used: it is well-conditioned near
+antipodes, but by analysis (not measured here) its
+numerator cancels at short range, costing relative accuracy
+there.
+
 ## 2026-09-24 — Minkowski takes an order p
 
 **Context.** `minkowski(u, v)` computed only the L1

@@ -50,14 +50,6 @@ that fails first, then the fix, then a ledger entry.
   `[-1, 2]` vs `[1, -2]` and NaN for two zero vectors. Decide
   whether negative inputs are out of domain (raise) and what
   all-zero input returns.
-- **Haversine near antipodes** — no longer raises (ledger
-  #15), but the formula is ill-conditioned there: `1 - a`
-  keeps half the digits, so the error is about √ε times the
-  distance (13 cm at 20,000 km). The atan2 form of the
-  great-circle distance (Vincenty's special case for a
-  sphere) is well-conditioned everywhere. Decide whether
-  that accuracy matters; the change would alter results in
-  the last bits everywhere.
 - **Levenshtein cost** — O(mn) time: 0.78 s at n = 2000 in
   pure Ruby. Probably fine; note it in the docs, or look at
   a banded or bit-parallel algorithm if long sequences

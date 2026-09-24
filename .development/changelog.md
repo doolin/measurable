@@ -26,7 +26,7 @@ before the fix — not modernization, style, or cleanup.
 | 6 | Haversine `:feet` used 5282 ft per mile | `3aa72f5` |
 | 7 | Haversine mile radius inconsistent with km radius (~0.07%) | `3aa72f5` |
 | 14 | Cosine similarity rounded past 1 (26% of random `v` against itself), giving negative distances; nearly parallel distances cancelled to 0; huge or tiny components gave NaN | `715f510` |
-| 15 | Haversine raised `Math::DomainError` on about 4% of antipodal pairs: rounding left `a` above 1 | this commit |
+| 15 | Haversine raised `Math::DomainError` on about 4% of antipodal pairs: rounding left `a` above 1 | `2c4b52d` |
 
 ### In the specs
 
@@ -45,6 +45,11 @@ before the fix — not modernization, style, or cleanup.
 | 13 | Rakefile named the `fivefish` RDoc generator, which nothing provides | `ae7989e` |
 
 ## Log
+
+- 2026-09-24 — Haversine computes 1 − a as a sum of squares
+  (`formula: :split`, the default): a few ulps everywhere,
+  where near antipodes the classic formula was off by up to
+  √ε of the distance. `formula: :classic` keeps the old bits.
 
 - 2026-09-24 — Haversine clamps `a` at 1, so antipodal
   points return half the circumference instead of raising.

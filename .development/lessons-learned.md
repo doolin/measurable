@@ -73,6 +73,28 @@ vectors, and Haversine raising `Math::DomainError` on 3.95%
 of antipodal pairs. A handful of hand-picked cases would
 have missed both.
 
+## Removing cancellation
+
+- **When a formula needs 1 − x with x near 1, derive the
+  complement directly.** Trigonometric identities usually
+  give it as a sum of nonnegative terms, and a sum of
+  nonnegative terms keeps full relative precision. Haversine's
+  `1 - a` went from 3.6×10⁷ ε to 1.4 ε near antipodes this way.
+- **Rewrite only the half that cancels.** Writing both a and
+  1 − a in the new form made the nearby case worse, because
+  the new form added a rounding to a trigonometric argument
+  where the old one had none. Each quantity should come from
+  the form that is accurate where that quantity is small.
+- **Measure error against a reference with extra digits, by
+  region.** A 60-digit BigDecimal evaluation of the textbook
+  formula, run over random, nearby, near-antipodal and exactly
+  antipodal pairs, showed both the gain and the regression in
+  one table. A single worst-case input would have shown only
+  the gain. At exact antipodes the reference's own `1 - a`
+  rounded negative. Clamping it there, where the true value
+  is known to be 0, is safe; in the code under test it is not
+  a fix.
+
 ## `gh` in a fork with an `upstream` remote
 
 With no default repository set, `gh` resolves to the

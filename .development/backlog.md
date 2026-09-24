@@ -62,25 +62,23 @@ that fails first, then the fix, then a ledger entry.
   a banded or bit-parallel algorithm if long sequences
   matter.
 
-- **Adopt property and mutation testing** — The research is
-  done: `.development/plans/testing-research.md` recommends
-  `prop_check` (its `float` generator produces NaN,
-  ±Infinity, Float::MAX and subnormals; CI stops at Ruby
-  3.4) and `mutant` under `--usage opensource`
-  (proprietary EULA, free for public open-source repos,
-  Ruby 4.0 supported). Before adopting, decide:
+- **Mutation testing with `mutant`** — Recommended in
+  `.development/plans/testing-research.md`: `--usage opensource`,
+  proprietary EULA, free for public open-source repos, Ruby
+  4.0 supported. `evilution` and `mutineer` are young MIT
+  alternatives. Before adopting, decide:
   - whether mutant's EULA is acceptable, and whether its
     "Free Project License" needs a sign-up;
-  - which properties each measure owes: metric axioms where
-    they hold, bounds (cosine in [−1, 1], Jaccard in [0, 1],
-    KL ≥ 0), invariances, and closed forms. Which
-    "distances" here are not metrics (Tanimoto,
-    `euclidean_squared`, `minkowski` with p < 1), and should
-    the specs say so?
   - whether to take a mutation-score baseline first, to see
     where the `be_within` specs are weakest.
-  This relates to the golden-output item below: both guard
-  numerical behavior, and they may become one harness.
+  Property testing (`prop_check`) went ahead first; see
+  `todo.md`. This also relates to the golden-output item
+  below: both guard numerical behavior, and they may become
+  one harness.
+- **Watch `hegeltest`** — An unofficial Ruby port of Hegel
+  (the Hypothesis engine), 0.1.1 as of 2026-08-31, declaring
+  Ruby 4.0 support and with Hypothesis-quality floats. Revisit
+  if `prop_check` falls short or `hegeltest` matures.
 
 - **Golden-output regression test** — The RuboCop cleanup
   was verified by a differential script: seeded inputs to

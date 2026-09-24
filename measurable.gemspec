@@ -26,6 +26,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'matrix'
   gem.add_development_dependency 'bundler'
+  gem.add_development_dependency 'prop_check', '~> 1.0'
   gem.add_development_dependency 'rake', '~> 13.0'
   gem.add_development_dependency 'rdoc', '~> 8.0'
   gem.add_development_dependency 'rspec', '~> 3.2'

@@ -54,6 +54,23 @@ adopting anything.
     and `0.0.next_float` / `0.0.prev_float` (the smallest
     subnormals). No -0.0.
 
+- Adopted 2026-09-24. In use it works on Ruby 4.0.7 under
+  RSpec: a deliberately false property (the triangle
+  inequality for `euclidean_squared`) failed after 2 runs
+  and shrank to a three-element counterexample. Read from
+  the 1.0.2 source:
+  - `forall` draws from an unseeded `Random.new`
+    (`property.rb`), with no option for a seed. Runs are not
+    reproducible. A failure reports its shrunk
+    counterexample, and that is what to reproduce from.
+  - `real_float` is a + b/(|c|+1) over growing integers, so
+    its magnitudes are moderate (tens to hundreds), never
+    extreme.
+  - `nonnegative_float` and `positive_float` try to filter
+    NaN with `val != Float::NAN`, which is always true, so
+    NaN can get through. Filter with `nan?` instead if you
+    use them.
+
 ### rantly (rantly-rb/rantly)
 
 - 3.0.0, 2024-10-21; Ruby >= 3.0.0; MIT.

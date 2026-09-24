@@ -77,6 +77,10 @@ only your own thread file — never bulk-read the directory.
 - A fork: `origin` is `doolin/measurable`, `upstream` is
   `generall/measurable`, and the gem itself descends from
   `reddavis/Distance-Measures`. Push to `origin` only.
+- With two remotes, `gh` defaults to the one named `upstream`,
+  so `gh run list` and `watch-ci` look at `generall/measurable`
+  and find nothing. Run `gh repo set-default doolin/measurable`
+  once per clone; it is stored in `.git/config`, not committed.
 - Not published to rubygems.org, by decision (see
   `.development/adr.md`). Never run `rake release`.
 - `bundle exec rake` runs the specs under `spec/`.

@@ -5,6 +5,9 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-24 — First GitHub Actions run green (bundler-audit,
+  specs, RuboCop on Ruby 4.0.7). Roadmap milestone 2 landed.
+
 - 2026-09-23 — README brought up to date: this fork's CI
   badge, install-from-git, Ruby 4.0+, the fork lineage, no
   NMatrix claims, and a known-issue note on Levenshtein.

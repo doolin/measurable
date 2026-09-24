@@ -5,6 +5,17 @@ that were only obvious in hindsight, and the methods
 worth reusing. One `##` section per theme, concrete
 enough to lift: playbooks and skills harvest this file.
 
+## `gh` in a fork with an `upstream` remote
+
+With no default repository set, `gh` picks among the
+remotes in a fixed order: `upstream`, then `github`, then
+`origin`. In a fork that keeps an `upstream` remote, bare
+`gh run list` and `watch-ci` query the upstream repo, find
+no runs, and `watch-ci` exits 11 ("no run found") while the
+fork's run is green. Run `gh repo set-default <fork>` once
+per clone. It lives in `.git/config`, so a fresh clone needs
+it again.
+
 ## Refactoring numerical code without changing a bit
 
 - **Passing specs don't show that no numbers changed.** Most

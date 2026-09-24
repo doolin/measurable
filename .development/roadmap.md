@@ -23,5 +23,6 @@ numerically trustworthy, worth asking.
    dependency the code does not use. Landed 2026-09-23.
 2. **Green CI.** A GitHub Actions workflow replaces the
    defunct `.travis.yml` and runs the specs on each push.
+   Landed 2026-09-24 (run 35989298688, on `a929169`).
 3. **Recurring upkeep.** `gem-update` passes are logged in
    `stewardship.md`.

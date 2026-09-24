@@ -90,6 +90,47 @@ describe Measurable::Levenshtein do
     end
   end
 
+  context 'against the recursive definition' do
+    # An independent oracle: the textbook recurrence over prefixes,
+    # memoized. d(i, j) is the distance between the first i elements of
+    # a and the first j elements of b. It shares no code with the
+    # two-row implementation under test.
+    let(:reference) do
+      lambda do |a, b|
+        memo = {}
+        d = lambda do |i, j|
+          next j if i.zero?
+          next i if j.zero?
+
+          memo[[i, j]] ||= [
+            d.call(i - 1, j) + 1,
+            d.call(i, j - 1) + 1,
+            d.call(i - 1, j - 1) + (a[i - 1] == b[j - 1] ? 0 : 1)
+          ].min
+        end
+        d.call(a.size, b.size)
+      end
+    end
+
+    let(:pairs) do
+      rng = Random.new(2_718)
+      word = -> { Array.new(rng.rand(0..9)) { %w[a b c d].sample(random: rng) }.join }
+      Array.new(1500) { [word.call, word.call] }
+    end
+
+    it 'agrees on random strings' do
+      disagreements = pairs.reject { |a, b| Measurable.levenshtein(a, b) == reference.call(a, b) }
+      expect(disagreements).to be_empty
+    end
+
+    it 'agrees on random arrays' do
+      disagreements = pairs.reject do |a, b|
+        Measurable.levenshtein(a.chars, b.chars) == reference.call(a.chars, b.chars)
+      end
+      expect(disagreements).to be_empty
+    end
+  end
+
   context 'arrays' do
     it 'handles empty' do
       expect(Measurable.levenshtein([], [])).to eq 0

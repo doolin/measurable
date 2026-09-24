@@ -25,7 +25,7 @@ before the fix — not modernization, style, or cleanup.
 | 5 | `MeasurableObject#distance` `throw`ed a string instead of raising | `d3f8f26` |
 | 6 | Haversine `:feet` used 5282 ft per mile | `3aa72f5` |
 | 7 | Haversine mile radius inconsistent with km radius (~0.07%) | `3aa72f5` |
-| 14 | Cosine similarity rounded past 1 (26% of random `v` against itself), giving negative distances; nearly parallel distances cancelled to 0; huge or tiny components gave NaN | this commit |
+| 14 | Cosine similarity rounded past 1 (26% of random `v` against itself), giving negative distances; nearly parallel distances cancelled to 0; huge or tiny components gave NaN | `715f510` |
 
 ### In the specs
 

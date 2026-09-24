@@ -21,7 +21,6 @@ RSpec::Core::RakeTask.new(:spec)
 RDoc::Task.new do |rdoc|
   rdoc.main = "README.md"
   rdoc.rdoc_files.include("README.md", "LICENSE", "lib")
-  rdoc.generator = "fivefish"
   rdoc.external = true
 end
 

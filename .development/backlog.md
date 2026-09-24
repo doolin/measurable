@@ -21,10 +21,3 @@ when it becomes active.
   Remove `gem.date`, which Bundler no longer uses. Not a
   blocker: the 2026-09-23 baseline installs without it.
   Roadmap milestone 1.
-- **The `rdoc` pin and the Rakefile's RDoc task** — `rdoc ~>
-  4.1` (4.3.0) loads fine on Ruby 4.0.7: `rake -T` lists the
-  rdoc tasks without warnings. But current rdoc is 8.0.0,
-  and the Rakefile sets `rdoc.generator = "fivefish"`, a
-  generator that no dependency provides, so `rake rdoc`
-  probably fails. Decide whether to keep an RDoc task at
-  all, then bump or drop the pin. Not a blocker.

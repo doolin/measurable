@@ -20,7 +20,7 @@ numerically trustworthy, worth asking.
 
 1. **Revival on Ruby 4.0.7.** `bundle install` succeeds and
    `bundle exec rake` passes, with a modern gemspec and no
-   dependency the code does not use.
+   dependency the code does not use. Landed 2026-09-23.
 2. **Green CI.** A GitHub Actions workflow replaces the
    defunct `.travis.yml` and runs the specs on each push.
 3. **Recurring upkeep.** `gem-update` passes are logged in

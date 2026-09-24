@@ -15,7 +15,8 @@ when it becomes active.
   `u, v` swap runs after the matrix is sized, so indices run
   past it. The specs pass only because each case they test
   happens to give the right answer despite the off-by-one.
-  Add known-answer specs (the list above) before fixing.
+  Add known-answer specs (the list above) before fixing,
+  and remove the README's "Known issue" note once it lands.
 - **Fix `WeightedOverlap#feature_contribution`** — It reads
   `@weight`, which is never set (the attribute is
   `@weights`), so every call raises `NoMethodError`. Nothing
@@ -59,9 +60,3 @@ when it becomes active.
     is mathematical notation. Probably allow those names in
     `.rubocop.yml` rather than rename them.
   - `Style/Documentation`, `Metrics/*`: case by case.
-- **Refresh the README** — It still names NMatrix as
-  supported (lines 7–12, 63, 72), shows a dead Travis badge
-  and a Code Climate badge for `agarie/measurable`, and
-  claims testing on MRI 1.9.3–2.1 and Rubinius. Rewrite
-  those passages to match the fork and Ruby 4, and keep the
-  credit to `reddavis`. Roadmap milestone 1.

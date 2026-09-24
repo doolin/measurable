@@ -1,33 +1,33 @@
-describe "Kullback-Leibler" do
+describe 'Kullback-Leibler' do
   before :all do
     @p = [0.10, 0.15, 0.35, 0.25, 0.15]
     @q = [0.09, 0.13, 0.39, 0.22, 0.17]
     @uniform = [0.20, 0.20, 0.20, 0.20, 0.20]
   end
 
-  context "Divergence" do
-    it "accepts two arguments" do
-      expect { Measurable.kullback_leibler(@p, @q) }.to_not raise_error
+  context 'Divergence' do
+    it 'accepts two arguments' do
+      expect { Measurable.kullback_leibler(@p, @q) }.not_to raise_error
       expect { Measurable.kullback_leibler(@p, @q, []) }.to raise_error(ArgumentError)
     end
 
-    it "shouldn't work with vectors of different length" do
+    it 'does not work with vectors of different length' do
       expect { Measurable.kullback_leibler(@p, [0.50, 0.50]) }.to raise_error(ArgumentError)
     end
 
-    it "shouldn't be symmetric" do
+    it 'is not symmetric' do
       expect(Measurable.kullback_leibler(@p, @q)).not_to eq Measurable.kullback_leibler(@q, @p)
     end
 
-    it "should increase with dissimilarity" do
+    it 'increases with dissimilarity' do
       expect(Measurable.kullback_leibler(@p, @uniform)).to be > Measurable.kullback_leibler(@p, @q)
     end
 
-    it "should return the correct value" do
+    it 'returns the correct value' do
       expect(Measurable.kullback_leibler(@p, @uniform)).to be_within(TOLERANCE).of 0.0960320738
     end
 
-    it "can be extended separately" do
+    it 'can be extended separately' do
       klass = Class.new do
         extend Measurable::KullbackLeibler
       end
@@ -35,7 +35,7 @@ describe "Kullback-Leibler" do
       expect(klass.kullback_leibler(@p, @q)).to be_within(TOLERANCE).of 0.007310294
     end
 
-    it "can be included separately" do
+    it 'can be included separately' do
       klass = Class.new do
         include Measurable::KullbackLeibler
       end

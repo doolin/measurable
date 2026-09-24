@@ -1,32 +1,32 @@
-describe "Cosine" do
-  context "Similarity" do
+describe 'Cosine' do
+  context 'Similarity' do
     before :all do
       @u = [1, 2]
       @v = [2, 3]
       @w = [4, 5]
     end
 
-    it "accepts two arguments" do
-      expect { Measurable.cosine_similarity(@u, @v) }.to_not raise_error
+    it 'accepts two arguments' do
+      expect { Measurable.cosine_similarity(@u, @v) }.not_to raise_error
       expect { Measurable.cosine_similarity(@u, @v, @w) }.to raise_error(ArgumentError)
     end
 
-    it "is symmetric" do
+    it 'is symmetric' do
       x = Measurable.cosine_similarity(@u, @v)
       y = Measurable.cosine_similarity(@v, @u)
       expect(x).to be_within(TOLERANCE).of(y)
     end
 
-    it "returns the correct value" do
+    it 'returns the correct value' do
       x = Measurable.cosine_similarity(@u, @v)
       expect(x).to be_within(TOLERANCE).of(0.992277877)
     end
 
-    it "raises ArgumentError with vectors of different length" do
+    it 'raises ArgumentError with vectors of different length' do
       expect { Measurable.cosine_similarity(@u, [1, 3, 5, 7]) }.to raise_error(ArgumentError)
     end
 
-    it "can be extended separately" do
+    it 'can be extended separately' do
       klass = Class.new do
         extend Measurable::Cosine
       end
@@ -34,7 +34,7 @@ describe "Cosine" do
       expect(x).to be_within(TOLERANCE).of(0.992277877)
     end
 
-    it "can be extended separately" do
+    it 'can be extended separately' do
       klass = Class.new do
         include Measurable::Cosine
       end
@@ -43,31 +43,31 @@ describe "Cosine" do
     end
   end
 
-  context "Distance" do
+  context 'Distance' do
     before :all do
       @u = [1, 2]
       @v = [2, 3]
       @w = [4, 5]
     end
 
-    it "accepts two arguments" do
-      expect { Measurable.cosine_distance(@u, @v) }.to_not raise_error
+    it 'accepts two arguments' do
+      expect { Measurable.cosine_distance(@u, @v) }.not_to raise_error
       expect { Measurable.cosine_distance(@u, @v, @w) }.to raise_error(ArgumentError)
     end
 
-    it "is symmetric" do
+    it 'is symmetric' do
       x = Measurable.cosine_distance(@u, @v)
       y = Measurable.cosine_distance(@v, @u)
       expect(x).to be_within(TOLERANCE).of(y)
     end
 
-    it "returns the correct value" do
+    it 'returns the correct value' do
       x = Measurable.cosine_distance(@u, @v)
       # TODO: Use a real example.
       expect(x).to be_within(TOLERANCE).of(1.0 - 0.992277877)
     end
 
-    it "raises ArgumentError with vectors of different length" do
+    it 'raises ArgumentError with vectors of different length' do
       expect { Measurable.cosine_distance(@u, [1, 3, 5, 7]) }.to raise_error(ArgumentError)
     end
   end

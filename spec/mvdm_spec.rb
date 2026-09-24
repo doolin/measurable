@@ -1,4 +1,4 @@
-describe "MVDM distance" do
+describe 'MVDM distance' do
   before :all do
     @data = [
       [5, 6, 8],
@@ -27,7 +27,7 @@ describe "MVDM distance" do
       [1, 2, 5]
     ]
 
-    @labels = @data.map { |x| x.map { |y| y.odd? ? 1 : 0 }.reduce(:+) > 1 ? :odd : :nodd }
+    @labels = @data.map { |x| x.count(&:odd?) > 1 ? :odd : :nodd }
 
     @test = [
       [[1, 1, 1], [2, 2, 2]],
@@ -37,15 +37,15 @@ describe "MVDM distance" do
     ]
   end
 
-  it "can be dumped and restored" do
+  it 'can be dumped and restored' do
     expect do
       metric = Measurable::MVDM.new(@data, @labels)
       dump = Marshal.dump(metric)
       metric = Marshal.load(dump)
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
-  it "calculates MVDM" do
+  it 'calculates MVDM' do
     metric = Measurable::MVDM.new(@data, @labels)
     res = @test.map do |a, b|
       metric.distance(a, b)
@@ -56,7 +56,7 @@ describe "MVDM distance" do
     expect(res[1]).to be > res[3]
   end
 
-  it "should calc MVDM ratio" do
+  it 'calculates MVDM ratio' do
     metric = Measurable::MVDM.new(@data, @labels, norm: true)
     res = @test.map do |a, b|
       metric.distance(a, b)
@@ -67,7 +67,7 @@ describe "MVDM distance" do
     expect(res[1]).to be > res[3]
   end
 
-  it "should be compatible with object interface" do
+  it 'is compatible with object interface' do
     metric = Measurable::MVDM.new(@data, @labels)
     arr1 = [1, 1, 1]
     arr2 = [2, 2, 2]

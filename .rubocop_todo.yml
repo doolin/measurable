@@ -44,7 +44,6 @@ Layout/EmptyLineBetweenDefs:
 Layout/EmptyLinesAfterModuleInclusion:
   Exclude:
     - 'lib/measurable/tanimoto.rb'
-    - 'spec/interfaces_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowAliasSyntax, AllowedMethods.
@@ -55,29 +54,11 @@ Layout/EmptyLinesAroundAttributeAccessor:
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'spec/chebyshev_spec.rb'
-    - 'spec/euclidean_spec.rb'
-    - 'spec/hamming_spec.rb'
-    - 'spec/haversine_spec.rb'
-    - 'spec/interfaces_spec.rb'
-    - 'spec/jaccard_spec.rb'
-    - 'spec/maxmin_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
 Layout/EmptyLinesAroundClassBody:
   Exclude:
     - 'lib/measurable/mvdm.rb'
     - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceInsidePercentLiteralDelimiters:
-  Exclude:
-    - 'spec/levenshtein_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 Lint/AmbiguousOperatorPrecedence:
@@ -151,12 +132,6 @@ Naming/VariableName:
     - 'spec/interfaces_spec.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: OnlySumOrWithInitialValue.
-Performance/Sum:
-  Exclude:
-    - 'spec/mvdm_spec.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
 Performance/TimesMap:
   Exclude:
     - 'lib/measurable/mvdm.rb'
@@ -214,24 +189,6 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Max: 9
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: CustomTransform, IgnoredWords, DisallowedExamples.
-# DisallowedExamples: works
-RSpec/ExampleWording:
-  Exclude:
-    - 'spec/chebyshev_spec.rb'
-    - 'spec/euclidean_spec.rb'
-    - 'spec/hamming_spec.rb'
-    - 'spec/haversine_spec.rb'
-    - 'spec/interfaces_spec.rb'
-    - 'spec/jaccard_spec.rb'
-    - 'spec/kullback_leibler_spec.rb'
-    - 'spec/levenshtein_spec.rb'
-    - 'spec/maxmin_spec.rb'
-    - 'spec/minkowski_spec.rb'
-    - 'spec/mvdm_spec.rb'
-    - 'spec/tanimoto_spec.rb'
-
 # Configuration parameters: AssignmentOnly.
 RSpec/InstanceVariable:
   Exclude:
@@ -256,25 +213,6 @@ RSpec/LeakyConstantDeclaration:
 RSpec/MultipleExpectations:
   Max: 5
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, to_not
-RSpec/NotToNot:
-  Exclude:
-    - 'spec/chebyshev_spec.rb'
-    - 'spec/cosine_spec.rb'
-    - 'spec/euclidean_spec.rb'
-    - 'spec/hamming_spec.rb'
-    - 'spec/haversine_spec.rb'
-    - 'spec/interfaces_spec.rb'
-    - 'spec/jaccard_spec.rb'
-    - 'spec/kullback_leibler_spec.rb'
-    - 'spec/maxmin_spec.rb'
-    - 'spec/minkowski_spec.rb'
-    - 'spec/mvdm_spec.rb'
-    - 'spec/tanimoto_spec.rb'
-    - 'spec/weighted_overlap_spec.rb'
-
 RSpec/RepeatedDescription:
   Exclude:
     - 'spec/cosine_spec.rb'
@@ -298,7 +236,6 @@ Style/Alias:
     - 'lib/measurable/jaccard.rb'
     - 'lib/measurable/minkowski.rb'
     - 'lib/measurable/tanimoto.rb'
-    - 'spec/interfaces_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
@@ -397,16 +334,6 @@ Style/NegatedIfElseCondition:
   Exclude:
     - 'lib/measurable/weighted_overlap.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/NestedTernaryOperator:
-  Exclude:
-    - 'spec/mvdm_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Strict, AllowedNumbers, AllowedPatterns.
-Style/NumericLiterals:
-  MinDigits: 6
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
 # SupportedStyles: predicate, comparison
@@ -463,14 +390,11 @@ Style/StderrPuts:
 # Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
-  Enabled: false
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: .
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: percent
-  MinSize: 8
+  Exclude:
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'lib/measurable/version.rb'
+    - 'measurable.gemspec'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.

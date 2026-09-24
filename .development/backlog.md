@@ -5,6 +5,17 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
+- **Bring RuboCop forward** — `.rubocop.yml` is a 2016
+  `--auto-gen-config` todo file (RuboCop 0.39), and current
+  RuboCop refuses to start on it: `Metrics/LineLength`,
+  `Style/UnneededPercentQ`, `Style/VariableName` and the
+  `Performance/*` cops were moved, renamed, or split out
+  into `rubocop-performance`. Regenerate the todo under
+  current RuboCop (`plugins:` for `rubocop-performance` and
+  `rubocop-rspec`, `TargetRubyVersion: 4.0`), work through
+  the offenses, then add a RuboCop step to
+  `.github/workflows/ci.yml`. Checked 2026-09-23.
+
 
 - **Refresh the README** — It still names NMatrix as
   supported (lines 7–12, 63, 72), shows a dead Travis badge
@@ -12,10 +23,6 @@ when it becomes active.
   claims testing on MRI 1.9.3–2.1 and Rubinius. Rewrite
   those passages to match the fork and Ruby 4, and keep the
   credit to `reddavis`. Roadmap milestone 1.
-- **Replace Travis with GitHub Actions** — `.travis.yml` is
-  dead. Add a workflow that runs `bundle exec rake` on Ruby
-  4.0, the gemspec's floor (see `adr.md`). Roadmap
-  milestone 2.
 - **Gemspec metadata** — Point authors, email and homepage at the fork
   chain in `AGENTS.md` instead of `agarie/measurable`.
   Remove `gem.date`, which Bundler no longer uses. Not a

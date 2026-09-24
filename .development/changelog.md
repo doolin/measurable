@@ -5,6 +5,10 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — Replaced `.travis.yml` with a GitHub Actions
+  workflow: bundler-audit, then `bundle exec rake`, on the
+  Ruby in `.ruby-version`.
+
 - 2026-09-23 — Moved the `rdoc` pin from `~> 4.1` to `~> 8.0`,
   clearing CVE-2021-31799 and CVE-2024-27281, and dropped the
   unprovided `fivefish` generator; `rake rdoc` builds again.

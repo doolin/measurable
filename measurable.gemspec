@@ -1,19 +1,17 @@
 $LOAD_PATH.unshift File.expand_path('../lib/', __FILE__)
 
 require 'measurable/version'
-require 'date'
 
 Gem::Specification.new do |gem|
   gem.name = "measurable"
   gem.version = Measurable::VERSION
-  gem.date = Date.today.to_s
   gem.license = "MIT"
   gem.summary = %Q{A Ruby gem with a lot of distance measures for your projects.}
-  gem.description = %Q{A Ruby gem with a lot of distance measures for your projects.}
+  gem.description = %Q{Distance and similarity measures over arrays and other enumerables: Euclidean, Minkowski, Chebyshev, cosine, Jaccard, Tanimoto, Hamming, Levenshtein, Haversine, max-min, Kullback-Leibler divergence, MVDM, and weighted overlap.}
 
-  gem.authors = ["Carlos Agarie"]
-  gem.email = "carlos.agarie@gmail.com"
-  gem.homepage = "http://github.com/agarie/measurable"
+  gem.authors = ["Carlos Agarie", "generall", "David Doolin"]
+  gem.email = "david.doolin@gmail.com"
+  gem.homepage = "https://github.com/doolin/measurable"
 
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

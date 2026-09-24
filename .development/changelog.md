@@ -5,6 +5,11 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — Gemspec metadata points at this fork: authors
+  (Agarie, generall, Doolin), email, homepage, a description
+  distinct from the summary; dropped `gem.date`. `gem build`
+  is warning-free.
+
 - 2026-09-23 — Replaced `.travis.yml` with a GitHub Actions
   workflow: bundler-audit, then `bundle exec rake`, on the
   Ruby in `.ruby-version`.

@@ -29,28 +29,3 @@ when it becomes active.
   generator that no dependency provides, so `rake rdoc`
   probably fails. Decide whether to keep an RDoc task at
   all, then bump or drop the pin. Not a blocker.
-
-### Ruby 4.0.7 baseline failures (2026-09-23)
-
-Found by a fresh resolve (no lockfile) with
-`rvm 4.0.7 do bundle install`, then `bundle exec rake` and
-`bundle exec rspec`. Each failure was worked around
-temporarily to see the next one, and every workaround was
-reverted. Listed in the order they fail. Fix them in this
-order, one commit each. Failures 1 (`nmatrix` does not
-build) and 2 (`rake ~> 10.1` cannot start) are fixed; see
-`changelog.md`.
-
-- **3. `mvdm.rb` cannot load `matrix`** — `bundle exec rspec`
-  fails loading `spec_helper`: `cannot load such file --
-  matrix` at `lib/measurable/mvdm.rb:48`. Declare `matrix`
-  as a runtime dependency. In the same commit, remove
-  `require 'pry'` at line 49. The specs don't catch that
-  one, because `pry` is in the development bundle, but
-  outside the development bundle, where `pry` is not
-  installed, loading the gem raises `LoadError`. See
-  `adr.md`. Roadmap milestone 1.
-- **After 1–3: specs green** — With `nmatrix` removed and
-  `matrix` added, `bundle exec rspec` ran 101 examples with 0
-  failures and no warnings. No failures are known past
-  these three.

@@ -7,21 +7,32 @@ the unit.
 
 ## Open questions
 
-### Where `mvdm.rb` gets `matrix` and `pry`
-
-`lib/measurable/mvdm.rb` requires `matrix` and `pry` when it
-loads. `pry` is only a development dependency, so requiring
-`measurable` in a program without `pry` raises `LoadError`.
-That looks like leftover debugging. `matrix` has not been a
-default gem since Ruby 3.1, so under Bundler it has to be
-declared as a runtime dependency. The alternative is to
-rewrite `MVDM` to use plain arrays or hashes.
-
-Leading option: delete `require 'pry'` and add `matrix` as a
-runtime dependency.
-
 <!-- Decided: "## YYYY-MM-DD — Title" sections below, newest
      first. -->
+
+## 2026-09-23 — Declare `matrix`, drop the `pry` require
+
+**Context.** `lib/measurable/mvdm.rb` required `matrix` and
+`pry` when it loaded, both added in `55d83c8` (2016-04-09).
+`matrix` has not been a default gem since Ruby 3.1, so under
+Bundler on Ruby 4.0.7 loading the gem raised `LoadError`
+before any spec ran. `pry` was only a development
+dependency, and no file in `lib/` or `spec/` calls it, so it
+was leftover debugging. It broke loading the gem in any
+program without `pry` installed. The specs cannot catch
+that, because `pry` is in the development bundle.
+
+**Decision.** Declare `matrix` as a runtime dependency and
+delete `require 'pry'`. Rewriting `MVDM` to avoid `Matrix`
+was the alternative. It would remove a dependency, but it
+means rewriting a working measure for no gain in
+correctness.
+
+**Consequences.** `bundle exec rake` passes on Ruby 4.0.7:
+101 examples, 0 failures. With the development group
+excluded (`BUNDLE_WITHOUT=development`), `require
+"measurable"` loads and computes, while `pry` cannot be
+loaded, so the gem no longer depends on it at load time.
 
 ## 2026-09-23 — Drop `nmatrix`
 

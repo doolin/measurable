@@ -46,7 +46,6 @@ module Measurable
   end
 
   require 'matrix'
-  require 'pry'
 
   MAX_MATRIX_SIZE = 1024
   class MVDM

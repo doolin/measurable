@@ -28,7 +28,7 @@ module Measurable
       intersection.length.to_f / union.length
     end
 
-    alias_method :jaccard, :jaccard_index
+    alias jaccard jaccard_index
 
     # call-seq:
     #     jaccard_dissimilarity(u, v) -> Float
@@ -54,7 +54,7 @@ module Measurable
       1 - jaccard_index(u, v)
     end
 
-    alias_method :jaccard_distance, :jaccard_dissimilarity
+    alias jaccard_distance jaccard_dissimilarity
 
     extend Measurable::Jaccard
   end

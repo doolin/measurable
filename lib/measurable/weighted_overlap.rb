@@ -1,6 +1,5 @@
 module Measurable
   class WeightedOverlap
-
     attr_accessor :weights, :feature_indexes
 
     def conditional_entropy(feature_index, feature_value)
@@ -10,30 +9,26 @@ module Measurable
         count = pair[1]
         # P(l | feature) = count of (Label = l) / count of (Feature = f)
         prob = feature_index.probability(feature_value, label)
-        if prob != 0.0
-          sum += prob * Math::log(prob, 2)
-        end
+        sum += prob * Math.log(prob, 2) if prob != 0.0
         sum
       end
     end
 
     def information_gain(feature_index)
       # for each feature value weighted by feature probability
-      label_entropy - feature_index.feature_count.reduce(0.0) do |sum, pair|
+      label_entropy - (feature_index.feature_count.reduce(0.0) do |sum, pair|
         value = pair[0]
         count = pair[1]
-        sum + conditional_entropy(feature_index, value) * count
-      end / @data_size.to_f
+        sum + (conditional_entropy(feature_index, value) * count)
+      end / @data_size.to_f)
     end
 
-    def label_entropy()
-      unless @label_entropy_cahce
-        @label_entropy_cahce = - @label_count.reduce(0.0) do |sum, pair|
-          label = pair[0]
-          count = pair[1]
-          prob = count / @data_size.to_f
-          sum += prob * Math::log(prob, 2)
-        end
+    def label_entropy
+      @label_entropy_cahce ||= - @label_count.reduce(0.0) do |sum, pair|
+        label = pair[0]
+        count = pair[1]
+        prob = count / @data_size.to_f
+        sum += prob * Math.log(prob, 2)
       end
       @label_entropy_cahce
     end
@@ -43,7 +38,7 @@ module Measurable
       @weights = Hash.new(1.0)
       return unless data && labels # do nothing if no data provided
       return if data.empty? || labels.empty?
-      fail ArgumentError if data.size != labels.size
+      raise ArgumentError if data.size != labels.size
 
       @data_size = data.size
       @feature_indexes = data.first.size.times.map { Probabilities::FeatureIndex.new }
@@ -59,7 +54,7 @@ module Measurable
       end
 
       if options[:skip_weighting]
-        @feature_indexes.each.with_index do |feature_index, index|
+        @feature_indexes.each.with_index do |_feature_index, index|
           @weights[index] = 1.0
         end
       else
@@ -86,7 +81,7 @@ module Measurable
     # calculate distance dontribution by features +f1+ and +f2+ with index +idx+
     def feature_contribution(f1, f2, idx)
       weight = @weight[idx]
-      dist = f1 != f2 ? weight : 0.0
+      dist = f1 == f2 ? 0.0 : weight
     end
 
     # call-seq:
@@ -115,12 +110,13 @@ module Measurable
     # Raises:
     # - +ArgumentError+ -> The sizes of +obj1+ and +obj2+ don't match.
     def distance(obj1, obj2)
-      fail ArgumentError if obj1.size != obj2.size
+      raise ArgumentError if obj1.size != obj2.size
+
       obj1.zip(obj2).each.with_index.reduce(0.0) do |sum, data|
         a = data.first[0]
         b = data.first[1]
         i = data.last
-        sum + (a != b ? @weights[i] : 0.0)
+        sum + (a == b ? 0.0 : @weights[i])
       end
     end
   end

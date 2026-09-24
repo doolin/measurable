@@ -5,6 +5,7 @@ module Measurable
     #
     class FeatureIndex
       attr_accessor :feature_label, :feature_count
+
       def initialize
         @feature_count = Hash.new(0)
         @feature_label = Hash.new { |hash, key| hash[key] = Hash.new(0) }
@@ -23,6 +24,7 @@ module Measurable
         fc = @feature_count[feature]
         fl = @feature_label[feature]
         return 0.0 unless fc || fl
+
         (fl[label] || 0.0) / fc.to_f
       end
 
@@ -32,7 +34,7 @@ module Measurable
           value = pair[0]
           count = pair[1]
           prob = count / @total_count.to_f
-          sum + prob * Math::log(prob, 2)
+          sum + (prob * Math.log(prob, 2))
         end
       end
 
@@ -49,14 +51,14 @@ module Measurable
 
   MAX_MATRIX_SIZE = 1024
   class MVDM
-
     # computes matrix for [feature, feature] summed over all labels
     def pre_compute_distance_matrixes(matrix_size = nil)
-      @distance_matrixes = Hash.new
-      @feature_remap = Hash.new # feature value to index maps
+      @distance_matrixes = {}
+      @feature_remap = {} # feature value to index maps
       @feature_indexes.each.with_index do |feature_index, key|
         @distance_matrixes[key] = Hash.new(0.0)
-        remap = feature_index.feature_count.keys.sort_by { |x| feature_index.feature_count[x] }.first(matrix_size || MAX_MATRIX_SIZE)
+        counts = feature_index.feature_count
+        remap = counts.keys.sort_by { |x| counts[x] }.first(matrix_size || MAX_MATRIX_SIZE)
         uniq_feature_count = remap.size
         matrix = Matrix.build(uniq_feature_count, uniq_feature_count) do |row, column|
           a = remap[row]
@@ -75,6 +77,7 @@ module Measurable
     # +norm+ - is normalisation flag
     def initialize(data, labels, options = {})
       return if data.empty?
+
       @feature_indexes = data.first.size.times.map { Probabilities::FeatureIndex.new }
       @label_count = Hash.new { |hash, key| hash[key] = 0 }
       data.each.with_index do |row, irow|
@@ -115,8 +118,9 @@ module Measurable
     # Raises:
     # - +ArgumentError+ -> The sizes of +obj1+ and +obj2+ don't match.
     def distance(obj1, obj2)
-      fail ArgumentError if obj1.size != obj2.size
-      fail ArgumentError if obj1.size != @distance_matrixes.size
+      raise ArgumentError if obj1.size != obj2.size
+      raise ArgumentError if obj1.size != @distance_matrixes.size
+
       @distance_matrixes.reduce(0.0) do |sum, pair|
         key = pair[0]
         dist_matrix = pair[1]

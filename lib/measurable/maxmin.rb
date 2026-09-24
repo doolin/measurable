@@ -22,10 +22,9 @@ module Measurable
       # TODO: Change this to a more specific, custom-made exception.
       raise ArgumentError if u.size != v.size
 
-      sum_min, sum_max = u.zip(v).reduce([0.0, 0.0]) do |acc, attributes|
+      sum_min, sum_max = u.zip(v).each_with_object([0.0, 0.0]) do |attributes, acc|
         acc[0] += attributes.min
         acc[1] += attributes.max
-        acc
       end
 
       sum_min / sum_max

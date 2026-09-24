@@ -32,8 +32,8 @@ module Measurable
 
     def self.included(base) # :nodoc:
       base.class_eval do
-        alias :cityblock :minkowski
-        alias :manhattan :minkowski
+        alias_method :cityblock, :minkowski
+        alias_method :manhattan, :minkowski
       end
       super
     end

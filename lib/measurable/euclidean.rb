@@ -46,9 +46,7 @@ module Measurable
     def euclidean_squared(u, v = nil)
       # If the second argument is nil, the method should return the norm of
       # vector u. For this, we need the distance between u and the origin.
-      if v.nil?
-        v = Array.new(u.size, 0)
-      end
+      v = Array.new(u.size, 0) if v.nil?
 
       # TODO: Change this to a more specific, custom-made exception.
       raise ArgumentError if u.size != v.size

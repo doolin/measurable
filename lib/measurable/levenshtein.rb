@@ -30,21 +30,19 @@ module Measurable
 
       matrix = Array.new(u.size + 1) { (0..v.size).to_a }
 
-      if v.size < u.size
-        u, v = v, u
-      end
+      u, v = v, u if v.size < u.size
 
       (1..u.size).each do |i|
         (1..v.size).each do |j|
-          if u[i] == v[j]
-            matrix[i][j] = matrix[i - 1][j - 1]
-          else
-            matrix[i][j] = [
-              matrix[i - 1][j] + 1,   # deletion
-              matrix[i][j - 1] + 1,   # insertion
-              matrix[i - 1][j - 1] + 1, # substitution
-            ].min
-          end
+          matrix[i][j] = if u[i] == v[j]
+                           matrix[i - 1][j - 1]
+                         else
+                           [
+                             matrix[i - 1][j] + 1,   # deletion
+                             matrix[i][j - 1] + 1,   # insertion
+                             matrix[i - 1][j - 1] + 1 # substitution
+                           ].min
+                         end
         end
       end
 

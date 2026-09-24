@@ -6,78 +6,17 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# This cop supports safe autocorrection (--autocorrect).
-Gemspec/DeprecatedAttributeAssignment:
-  Exclude:
-    - 'measurable.gemspec'
-
 # Configuration parameters: EnforcedStyle, AllowedGems.
 # SupportedStyles: Gemfile, gems.rb, gemspec
 Gemspec/DevelopmentDependencies:
   Exclude:
     - 'measurable.gemspec'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: TreatCommentsAsGroupSeparators, ConsiderPunctuation.
-Gemspec/OrderedDependencies:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Gemspec/RequireMFA:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EmptyLineBetweenMethodDefs, EmptyLineBetweenClassDefs, EmptyLineBetweenModuleDefs, DefLikeMacros, AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'lib/measurable/interfaces.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLinesAfterModuleInclusion:
-  Exclude:
-    - 'lib/measurable/tanimoto.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowAliasSyntax, AllowedMethods.
-# AllowedMethods: alias_method, public, protected, private
-Layout/EmptyLinesAroundAttributeAccessor:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperatorPrecedence:
-  Exclude:
-    - 'lib/measurable/haversine.rb'
-    - 'lib/measurable/mvdm.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
     - 'spec/interfaces_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/measurable/weighted_overlap.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 Lint/UselessAssignment:
@@ -228,40 +167,6 @@ Security/MarshalLoad:
   Exclude:
     - 'spec/mvdm_spec.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'lib/measurable/jaccard.rb'
-    - 'lib/measurable/minkowski.rb'
-    - 'lib/measurable/tanimoto.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: percent_q, bare_percent
-Style/BarePercentLiterals:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/ColonMethodCall:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'lib/measurable/levenshtein.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/DefWithParentheses:
-  Exclude:
-    - 'lib/measurable/weighted_overlap.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
@@ -282,21 +187,6 @@ Style/Documentation:
     - 'lib/measurable/tanimoto.rb'
     - 'lib/measurable/weighted_overlap.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/EachWithObject:
-  Exclude:
-    - 'lib/measurable/maxmin.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/EmptyLiteral:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'measurable.gemspec'
-
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: scientific, engineering, integral
 Style/ExponentialNotation:
@@ -316,24 +206,6 @@ Style/HashEachMethods:
   Exclude:
     - 'lib/measurable/mvdm.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'lib/measurable/interfaces.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/measurable/euclidean.rb'
-    - 'lib/measurable/levenshtein.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/NegatedIfElseCondition:
-  Exclude:
-    - 'lib/measurable/weighted_overlap.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
 # SupportedStyles: predicate, comparison
@@ -350,66 +222,7 @@ Style/OneClassPerFile:
     - 'test/**/*'
     - 'lib/measurable/interfaces.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/OrAssignment:
-  Exclude:
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: lower_case_q, upper_case_q
-Style/PercentQLiterals:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantPercentQ:
-  Exclude:
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'lib/measurable/mvdm.rb'
-    - 'lib/measurable/weighted_overlap.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/StderrPuts:
-  Exclude:
-    - 'Rakefile'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'lib/measurable/version.rb'
-    - 'measurable.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Exclude:
-    - 'lib/measurable/levenshtein.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/ZeroLengthPredicate:
   Exclude:
     - 'lib/measurable/levenshtein.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowHeredoc, AllowURI, AllowQualifiedName, URISchemes, AllowRBSInlineAnnotation, AllowCopDirectives, AllowedPatterns, SplitStrings.
-# URISchemes: http, https
-Layout/LineLength:
-  Max: 250

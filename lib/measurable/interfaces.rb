@@ -9,6 +9,7 @@ module Measurable
         Measurable.send(@name, a, b)
       end
     end
+
     def object_for(measure)
       DistanceByName.new(measure)
     end
@@ -23,16 +24,12 @@ module Measurable
     def distance(other, measure = nil, &distance)
       if distance
         yield coordinates, other.coordinates
+      elsif measure
+        measure.distance(coordinates, other.coordinates)
+      elsif @measure
+        @measure.distance(coordinates, other.coordinates)
       else
-        if measure
-          measure.distance(coordinates, other.coordinates)
-        else
-          if @measure
-            @measure.distance(coordinates, other.coordinates)
-          else
-            throw 'No measure specified'
-          end
-        end
+        throw 'No measure specified'
       end
     end
 

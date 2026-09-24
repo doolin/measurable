@@ -5,6 +5,35 @@ that were only obvious in hindsight, and the methods
 worth reusing. One `##` section per theme, concrete
 enough to lift: playbooks and skills harvest this file.
 
+## Refactoring numerical code without changing a bit
+
+- **Passing specs don't show that no numbers changed.** Most
+  specs here check values with `be_within`, so a refactor
+  that moves a result by one ulp still passes. Run a
+  differential check instead: seeded random inputs to every
+  public measure, each result printed with `Float#inspect`
+  (the shortest form that round-trips exactly), run against
+  the old and new `lib/` (`git archive HEAD lib` into a
+  scratch directory, `ruby -I<dir>`), then compare the two
+  output files byte for byte. Any byte of difference is a
+  change in behavior.
+- **Tally the error lines, not just the diff.** An input
+  that raises exercises nothing. Count results by measure
+  and error class, or a check that "matches" is only
+  matching `ArgumentError` to `ArgumentError`. That count
+  is what surfaced the Levenshtein crash.
+- **Read what "safe" autocorrect wrote.** RuboCop's safe
+  cops preserved every result, but they also turned
+  "should only work" into "onlies work" and "should calc"
+  into "calcs", and rewrote a nested ternary as an
+  unindented `if` block. Run the whitespace-only `Layout`
+  cops after the others, then read the diff.
+- **Keep unsafe and judgment cops out of bulk runs.**
+  `Performance/Sum` swaps `reduce(:+)` for `Array#sum`,
+  which uses compensated summation, so results change. In
+  numerical code, `Lint/UselessAssignment` can mean a value
+  that was computed and then dropped. Review both by hand.
+
 ## Taking a baseline of a long-dormant gem
 
 - **Select the Ruby explicitly.** The rvm default on this

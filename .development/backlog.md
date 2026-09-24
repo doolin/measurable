@@ -15,15 +15,6 @@ that fails first, then the fix, then a ledger entry.
 
 **Defects** (wrong results or crashes on valid input):
 
-- **Euclidean overflows and underflows** — the sum of
-  squares overflows for magnitudes around 1e154 and above
-  (`euclidean([1e200, 1e200])` is Infinity, true value
-  1.41e200) and underflows below about 1e-162
-  (`euclidean([3e-200, 4e-200])` is 0.0, true 5e-200;
-  subnormal squares give 0.6% error). Scale by the largest
-  |dᵢ| as `minkowski(u, v, 2)` now does. `euclidean_squared`
-  is different: its true value can itself be outside the
-  Float range, so overflow there is correct.
 - **KL is NaN when pᵢ = 0** — `0 * log(0 / q)` evaluates to
   `0 * -Infinity = NaN`, but by the standard convention that
   term is 0. `kullback_leibler([0, 0.5, 0.5], [0.5, 0.25, 0.25])`

@@ -95,6 +95,28 @@ have missed both.
   is known to be 0, is safe; in the code under test it is not
   a fix.
 
+## Fixing the extremes without moving the middle
+
+- **Guard the fast formula; don't replace it.** The plain
+  sum of squares is accurate wherever it neither overflows
+  nor falls into the subnormal range, and both failures are
+  visible in the result (Infinity, or a sum below
+  `Float::MIN / ε`). Falling back to the scaled norm only
+  then fixed `euclidean` at the extremes while every
+  normal-range result stayed bit-identical. Replacing the
+  formula outright would have moved them all.
+- **Measure subnormal results in ulps, not relative error.**
+  A subnormal carries few significant bits, so its relative
+  error can be 10¹² ε while it is correctly rounded. Error
+  in units of the result's own ulp is the fair measure
+  across the whole range.
+- **Scaling by a power of two is exact, which makes it a
+  property.** `f(2ᵏ·x) = 2ᵏ·f(x)` for a norm holds to
+  rounding, and pushing k to ±500 drives inputs into the
+  overflow and underflow regions from ordinary ones. It
+  failed on the old `euclidean` at the first try and shrank
+  to a vector with a single nonzero component.
+
 ## `gh` in a fork with an `upstream` remote
 
 With no default repository set, `gh` resolves to the

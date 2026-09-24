@@ -12,7 +12,7 @@ commit. Keep the count current: add an entry in the same
 commit as the fix. A defect is behavior that was wrong
 before the fix — not modernization, style, or cleanup.
 
-**Count: 15** — code 9, tests 2, dependencies and build 4.
+**Count: 16** — code 10, tests 2, dependencies and build 4.
 
 ### In the gem's code
 
@@ -27,6 +27,7 @@ before the fix — not modernization, style, or cleanup.
 | 7 | Haversine mile radius inconsistent with km radius (~0.07%) | `3aa72f5` |
 | 14 | Cosine similarity rounded past 1 (26% of random `v` against itself), giving negative distances; nearly parallel distances cancelled to 0; huge or tiny components gave NaN | `715f510` |
 | 15 | Haversine raised `Math::DomainError` on about 4% of antipodal pairs: rounding left `a` above 1 | `2c4b52d` |
+| 16 | `euclidean` overflowed to Infinity above about 1e154 and underflowed to 0 below about 1e-162, where the distance is representable | this commit |
 
 ### In the specs
 
@@ -45,6 +46,11 @@ before the fix — not modernization, style, or cleanup.
 | 13 | Rakefile named the `fivefish` RDoc generator, which nothing provides | `ae7989e` |
 
 ## Log
+
+- 2026-09-24 — `euclidean` falls back to a scaled norm when
+  the sum of squares overflows or drops below
+  `Float::MIN / ε`: within 2 ulp from subnormal to 1e300.
+  Normal-range results are bit-identical.
 
 - 2026-09-24 — Haversine computes 1 − a as a sum of squares
   (`formula: :split`, the default): a few ulps everywhere,

@@ -18,7 +18,13 @@ module Measurable
     # Raises:
     # - +ArgumentError+ -> The sizes of +u+ and +v+ don't match.
     def euclidean(u, v = nil)
-      Math.sqrt(euclidean_squared(u, v))
+      sum = euclidean_squared(u, v)
+      # The plain sum of squares is exact enough unless it overflowed or is
+      # small enough for subnormal rounding to matter. The comparison is
+      # false for NaN, so NaN still propagates.
+      return euclidean_scaled(u, v) if sum.infinite? || sum < SMALLEST_SAFE_SQUARE_SUM
+
+      Math.sqrt(sum)
     end
 
     # call-seq:
@@ -54,6 +60,28 @@ module Measurable
       u.zip(v).reduce(0.0) do |acc, ary|
         acc + ((ary[0] - ary[-1])**2)
       end
+    end
+
+    # Below this, a sum of squares may carry subnormal rounding, which is
+    # absolute and so not small relative to the sum. Above it, that rounding
+    # is below epsilon squared relative to the sum.
+    SMALLEST_SAFE_SQUARE_SUM = Float::MIN / Float::EPSILON
+
+    private
+
+    # m * sqrt(sum (d/m)**2), with m the largest |d|: finite and accurate for
+    # any finite input whose distance is representable.
+    def euclidean_scaled(u, v)
+      v = Array.new(u.size, 0) if v.nil?
+      differences = u.zip(v).map { |a, b| (a - b).abs }
+      largest = (differences.max || 0).to_f
+      return largest if largest.zero? || largest.infinite?
+
+      sum = differences.reduce(0.0) do |acc, d|
+        q = d / largest
+        acc + (q * q)
+      end
+      largest * Math.sqrt(sum)
     end
   end
 

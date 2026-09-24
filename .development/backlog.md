@@ -5,6 +5,13 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
+- **Refresh the README** — It still names NMatrix as
+  supported (lines 7–12, 63, 72), shows a dead Travis badge
+  and a Code Climate badge for `agarie/measurable`, and
+  claims testing on MRI 1.9.3–2.1 and Rubinius. Rewrite
+  those passages to match the fork and Ruby 4, and keep the
+  credit to `reddavis`. Roadmap milestone 1.
+
 - **Replace Travis with GitHub Actions** — `.travis.yml` is
   dead. Add a workflow that runs `bundle exec rake` on the
   Ruby versions the gemspec claims to support. Roadmap
@@ -23,13 +30,9 @@ Found by a fresh resolve (no lockfile) with
 `bundle exec rspec`. Each failure was worked around
 temporarily to see the next one, and every workaround was
 reverted. Listed in the order they fail. Fix them in this
-order, one commit each.
+order, one commit each. Failure 1 (`nmatrix` does not
+build) is fixed; see `changelog.md`.
 
-- **1. `nmatrix` does not build** — `nmatrix 0.2.4`
-  extconf fails: "You need a version of g++ which supports
-  -std=c++0x or -std=c++11". This stops `bundle install`
-  entirely. The code never loads it (see `adr.md`), so
-  remove the dependency. Roadmap milestone 1.
 - **2. `rake ~> 10.1` cannot start** — `bundle install`
   succeeds with `rake 10.5.0`, but `bundle exec rake` raises
   `LoadError: cannot load such file -- ostruct`, because

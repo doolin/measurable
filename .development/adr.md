@@ -7,28 +7,6 @@ the unit.
 
 ## Open questions
 
-### What to do about `nmatrix`
-
-The gemspec declares `nmatrix` as the only runtime
-dependency. `nmatrix` is an unmaintained C extension and is
-unlikely to build on Ruby 4.0.7. As of 2026-09-23 no file in
-`lib/` or `spec/` requires or references it. It appears only
-in the gemspec and in the README, which says measures accept
-any enumerable, NMatrix included.
-
-Options:
-
-- **Drop it (leading option).** The code never loads it, so
-  removing it from the gemspec loses nothing. The README
-  should keep saying that any enumerable works, without
-  naming NMatrix.
-- **Replace it with `numo-narray`.** This only makes sense
-  if a measure is rewritten to run vectorized, and none is
-  planned.
-
-Confirm first that a spec passing an NMatrix does not exist
-in history or upstream, then decide.
-
 ### Where `mvdm.rb` gets `matrix` and `pry`
 
 `lib/measurable/mvdm.rb` requires `matrix` and `pry` when it
@@ -44,3 +22,33 @@ runtime dependency.
 
 <!-- Decided: "## YYYY-MM-DD — Title" sections below, newest
      first. -->
+
+## 2026-09-23 — Drop `nmatrix`
+
+**Context.** `nmatrix` was the gem's only runtime dependency.
+It is an unmaintained C extension, and on Ruby 4.0.7 its
+build fails ("You need a version of g++ which supports
+-std=c++0x or -std=c++11"), which stopped `bundle install`
+entirely. The code has never used it at runtime:
+
+- No file in `lib/` or `spec/` references it today.
+- It entered the gemspec in `55d83c8` (2016-04-09, "redesign
+  matrix precompute fot MVDM"), but that rewrite uses the
+  standard library's `Matrix.build`, not NMatrix.
+- The only time the project ever loaded it was a
+  `require 'nmatrix'` in `spec_helper.rb` from `5a50f25`
+  (2012-10) to `aeec935` (2013-03), and no spec ever built
+  an NMatrix.
+- A pickaxe search of all refs, `upstream/master`
+  included, finds nothing else.
+
+**Decision.** Remove it from the gemspec. Do not replace it
+with `numo-narray`: that only makes sense if a measure is
+rewritten to run vectorized, and none is planned.
+
+**Consequences.** `bundle install` succeeds on Ruby 4.0.7.
+Most measures are duck-typed over enumerables, so a caller
+who installs NMatrix separately may still pass one in; the
+gem just no longer installs it. The README still names
+NMatrix, and that belongs to the README refresh in
+`backlog.md`.

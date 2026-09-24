@@ -66,6 +66,9 @@ module Measurable
       lat2_rad = u[0] * RAD_PER_DEG
 
       a = (Math.sin(dlat_rad / 2)**2) + (Math.cos(lat1_rad) * Math.cos(lat2_rad) * (Math.sin(dlon_rad / 2)**2))
+      # Rounding can leave a just above 1 for antipodal points. The comparison
+      # is false for NaN, so NaN still propagates.
+      a = 1.0 if a > 1.0
       c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
       EARTH_RADIUS[unit] * c

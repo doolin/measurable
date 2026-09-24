@@ -15,13 +15,6 @@ that fails first, then the fix, then a ledger entry.
 
 **Defects** (wrong results or crashes on valid input):
 
-- **Haversine raises near antipodes** — `Math::DomainError`
-  on 395 of 10,000 exactly antipodal pairs (3.95%), e.g.
-  `[37.865216427464006, 35.83562198419082]` vs its antipode.
-  Rounding pushes `a` above 1 and `Math.sqrt(1 - a)` fails.
-  Clamp `a` to [0, 1] (or use `2 * asin(sqrt(a))` with a
-  clamp). Small separations are already accurate to about
-  1e-16 relative.
 - **Euclidean overflows and underflows** — the sum of
   squares overflows for magnitudes around 1e154 and above
   (`euclidean([1e200, 1e200])` is Infinity, true value
@@ -57,6 +50,14 @@ that fails first, then the fix, then a ledger entry.
   `[-1, 2]` vs `[1, -2]` and NaN for two zero vectors. Decide
   whether negative inputs are out of domain (raise) and what
   all-zero input returns.
+- **Haversine near antipodes** — no longer raises (ledger
+  #15), but the formula is ill-conditioned there: `1 - a`
+  keeps half the digits, so the error is about √ε times the
+  distance (13 cm at 20,000 km). The atan2 form of the
+  great-circle distance (Vincenty's special case for a
+  sphere) is well-conditioned everywhere. Decide whether
+  that accuracy matters; the change would alter results in
+  the last bits everywhere.
 - **Levenshtein cost** — O(mn) time: 0.78 s at n = 2000 in
   pure Ruby. Probably fine; note it in the docs, or look at
   a banded or bit-parallel algorithm if long sequences

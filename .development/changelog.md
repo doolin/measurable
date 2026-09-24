@@ -12,7 +12,7 @@ commit. Keep the count current: add an entry in the same
 commit as the fix. A defect is behavior that was wrong
 before the fix — not modernization, style, or cleanup.
 
-**Count: 14** — code 8, tests 2, dependencies and build 4.
+**Count: 15** — code 9, tests 2, dependencies and build 4.
 
 ### In the gem's code
 
@@ -26,6 +26,7 @@ before the fix — not modernization, style, or cleanup.
 | 6 | Haversine `:feet` used 5282 ft per mile | `3aa72f5` |
 | 7 | Haversine mile radius inconsistent with km radius (~0.07%) | `3aa72f5` |
 | 14 | Cosine similarity rounded past 1 (26% of random `v` against itself), giving negative distances; nearly parallel distances cancelled to 0; huge or tiny components gave NaN | `715f510` |
+| 15 | Haversine raised `Math::DomainError` on about 4% of antipodal pairs: rounding left `a` above 1 | this commit |
 
 ### In the specs
 
@@ -44,6 +45,10 @@ before the fix — not modernization, style, or cleanup.
 | 13 | Rakefile named the `fivefish` RDoc generator, which nothing provides | `ae7989e` |
 
 ## Log
+
+- 2026-09-24 — Haversine clamps `a` at 1, so antipodal
+  points return half the circumference instead of raising.
+  NaN input still propagates. Other results unchanged.
 
 - 2026-09-24 — Cosine similarity and distance rebuilt on
   unit vectors from a scaled norm: similarity clamped to

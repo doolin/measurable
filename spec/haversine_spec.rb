@@ -47,6 +47,24 @@ describe 'Haversine distance' do
     end
   end
 
+  context 'with antipodal points' do
+    # Rounding can push the haversine term a just past 1 here, and
+    # Math.sqrt(1 - a) then raises Math::DomainError.
+    it 'returns half the circumference' do
+      expect(Measurable.haversine([-82.0, 0.0], [82.0, -180.0], :km)).to eq(Math::PI * 6371)
+    end
+
+    # Near a = 1 the formula is ill-conditioned: 1 - a keeps only half the
+    # digits, so the error is of order sqrt(epsilon) times the distance.
+    it 'never raises for any latitude' do
+      half = Math::PI * 6371
+      (-90..90).each do |lat|
+        expect(Measurable.haversine([lat, 45.0], [-lat, -135.0], :km))
+          .to be_within(Math.sqrt(Float::EPSILON) * half).of(half)
+      end
+    end
+  end
+
   it 'only works with [lat, long] vectors' do
     expect { Measurable.haversine([2, 4], [1, 3, 5, 7]) }.to raise_error(ArgumentError)
   end

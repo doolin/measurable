@@ -5,6 +5,9 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — Dropped the `pry` development dependency;
+  nothing in the repo used it.
+
 - 2026-09-23 — Declared `matrix` and removed the stray
   `require 'pry'` from `mvdm.rb`; `bundle exec rake` passes
   on Ruby 4.0.7 (101 examples, 0 failures).

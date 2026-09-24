@@ -30,6 +30,23 @@ describe 'Haversine distance' do
     expect(x).to be_within(@haversine_tolerance).of(18_533)
   end
 
+  context 'with consistent units' do
+    let(:km) { Measurable.haversine(@u, @v, :km) }
+
+    it 'gives meters as 1000 times kilometers' do
+      expect(Measurable.haversine(@u, @v, :meters)).to be_within(1e-9 * km * 1000).of(km * 1000)
+    end
+
+    it 'gives miles as kilometers over 1.609344' do
+      expect(Measurable.haversine(@u, @v, :miles)).to be_within(1e-12 * km).of(km / 1.609344)
+    end
+
+    it 'gives feet as 5280 times miles' do
+      miles = Measurable.haversine(@u, @v, :miles)
+      expect(Measurable.haversine(@u, @v, :feet)).to be_within(1e-12 * miles * 5280).of(miles * 5280)
+    end
+  end
+
   it 'only works with [lat, long] vectors' do
     expect { Measurable.haversine([2, 4], [1, 3, 5, 7]) }.to raise_error(ArgumentError)
   end

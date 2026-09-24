@@ -5,11 +5,6 @@ when it becomes active.
 
 <!-- Newest items at the top. -->
 
-- **Haversine unit constants** — `feet:` is
-  `EARTH_RADIUS_IN_MILES * 5282`; a mile is 5280 feet. The
-  mile radius (3956) and km radius (6371 km ≈ 3958.8 mi)
-  also disagree, so `:miles` and `:km` results differ by
-  about 0.07%. Derive every unit from one radius.
 - **Golden-output regression test** — The RuboCop cleanup
   was verified by a differential script: seeded inputs to
   every measure, results printed in Float#inspect form,

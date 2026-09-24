@@ -1,16 +1,22 @@
 module Measurable
-  # Earth radius in miles.
-  EARTH_RADIUS_IN_MILES = 3956
-
-  # Earth radius in kilometers. Some algorithms use 6367.
+  # Earth radius in kilometers (mean radius, rounded). Some algorithms use 6367.
+  # Every other unit is derived from this one, so results agree across units.
   EARTH_RADIUS_IN_KILOMETERS = 6371
 
+  # Kilometers per international mile (exact by definition).
+  KILOMETERS_PER_MILE = 1.609344
+
+  # Feet per mile (exact by definition).
+  FEET_PER_MILE = 5280
+
+  # Earth radius in miles, derived from the kilometer radius.
+  EARTH_RADIUS_IN_MILES = EARTH_RADIUS_IN_KILOMETERS / KILOMETERS_PER_MILE
+
   # The great circle distance returned will be in whatever units R is in.
-  # Provides
   EARTH_RADIUS = {
     miles: EARTH_RADIUS_IN_MILES,
     km: EARTH_RADIUS_IN_KILOMETERS,
-    feet: EARTH_RADIUS_IN_MILES * 5282,
+    feet: EARTH_RADIUS_IN_MILES * FEET_PER_MILE,
     meters: EARTH_RADIUS_IN_KILOMETERS * 1000
   }.freeze
 

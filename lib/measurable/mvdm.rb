@@ -31,7 +31,6 @@ module Measurable
       # calculate entropy of feature
       def entropy
         - @feature_count.reduce(0.0) do |sum, pair|
-          value = pair[0]
           count = pair[1]
           prob = count / @total_count.to_f
           sum + (prob * Math.log(prob, 2))

@@ -21,14 +21,7 @@ Lint/ConstantDefinitionInBlock:
 # This cop supports safe autocorrection (--autocorrect).
 Lint/UselessAssignment:
   Exclude:
-    - 'lib/measurable/cosine.rb'
-    - 'lib/measurable/euclidean.rb'
-    - 'lib/measurable/haversine.rb'
-    - 'lib/measurable/kullback_leibler.rb'
-    - 'lib/measurable/minkowski.rb'
-    - 'lib/measurable/mvdm.rb'
     - 'lib/measurable/weighted_overlap.rb'
-    - 'spec/mvdm_spec.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes.
 Metrics/AbcSize:
@@ -162,10 +155,6 @@ RSpec/SpecFilePathFormat:
   Exclude:
     - '**/spec/routing/**/*'
     - 'spec/levenshtein_spec.rb'
-
-Security/MarshalLoad:
-  Exclude:
-    - 'spec/mvdm_spec.rb'
 
 # Configuration parameters: AllowedConstants.
 Style/Documentation:

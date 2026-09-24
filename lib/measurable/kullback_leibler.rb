@@ -29,7 +29,7 @@ module Measurable
       raise ArgumentError if p.size != q.size
 
       p.zip(q).reduce(0.0) do |acc, probs|
-        acc += probs[0] * Math.log(probs[0] / probs[1])
+        acc + (probs[0] * Math.log(probs[0] / probs[1]))
       end
     end
   end

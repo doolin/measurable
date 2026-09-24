@@ -38,11 +38,11 @@ describe 'MVDM distance' do
   end
 
   it 'can be dumped and restored' do
-    expect do
-      metric = Measurable::MVDM.new(@data, @labels)
-      dump = Marshal.dump(metric)
-      metric = Marshal.load(dump)
-    end.not_to raise_error
+    metric = Measurable::MVDM.new(@data, @labels)
+    restored = Marshal.load(Marshal.dump(metric))
+    @test.each do |a, b|
+      expect(restored.distance(a, b)).to eq(metric.distance(a, b))
+    end
   end
 
   it 'calculates MVDM' do

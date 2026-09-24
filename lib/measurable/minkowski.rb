@@ -18,7 +18,7 @@ module Measurable
       raise ArgumentError if u.size != v.size
 
       u.zip(v).reduce(0) do |acc, elem|
-        acc += (elem[0] - elem[1]).abs
+        acc + (elem[0] - elem[1]).abs
       end
     end
 

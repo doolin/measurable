@@ -6,7 +6,6 @@ module Measurable
       # H(label | feature) = \Sum_{l \in Labels} P(l | feature) log P(l | feature)
       - @label_count.reduce(0.0) do |sum, pair|
         label = pair[0]
-        count = pair[1]
         # P(l | feature) = count of (Label = l) / count of (Feature = f)
         prob = feature_index.probability(feature_value, label)
         sum += prob * Math.log(prob, 2) if prob != 0.0
@@ -25,10 +24,9 @@ module Measurable
 
     def label_entropy
       @label_entropy_cahce ||= - @label_count.reduce(0.0) do |sum, pair|
-        label = pair[0]
         count = pair[1]
         prob = count / @data_size.to_f
-        sum += prob * Math.log(prob, 2)
+        sum + (prob * Math.log(prob, 2))
       end
       @label_entropy_cahce
     end

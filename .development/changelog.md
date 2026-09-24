@@ -5,6 +5,9 @@ newest first. When an item leaves `todo.md` finished, note it
 here. Not every completion needs an entry; record the ones a
 future reader would want to find.
 
+- 2026-09-23 — Moved the `rake` pin from `~> 10.1` to
+  `~> 13.0`; `bundle exec rake` starts on Ruby 4.0.7.
+
 - 2026-09-23 — Dropped the unused `nmatrix` runtime
   dependency; `bundle install` now succeeds on Ruby 4.0.7.
 

@@ -22,6 +22,13 @@ when it becomes active.
   Remove `gem.date`, which Bundler no longer uses. Not a
   blocker: the 2026-09-23 baseline installs without it.
   Roadmap milestone 1.
+- **The `rdoc` pin and the Rakefile's RDoc task** — `rdoc ~>
+  4.1` (4.3.0) loads fine on Ruby 4.0.7: `rake -T` lists the
+  rdoc tasks without warnings. But current rdoc is 8.0.0,
+  and the Rakefile sets `rdoc.generator = "fivefish"`, a
+  generator that no dependency provides, so `rake rdoc`
+  probably fails. Decide whether to keep an RDoc task at
+  all, then bump or drop the pin. Not a blocker.
 
 ### Ruby 4.0.7 baseline failures (2026-09-23)
 
@@ -30,17 +37,10 @@ Found by a fresh resolve (no lockfile) with
 `bundle exec rspec`. Each failure was worked around
 temporarily to see the next one, and every workaround was
 reverted. Listed in the order they fail. Fix them in this
-order, one commit each. Failure 1 (`nmatrix` does not
-build) is fixed; see `changelog.md`.
+order, one commit each. Failures 1 (`nmatrix` does not
+build) and 2 (`rake ~> 10.1` cannot start) are fixed; see
+`changelog.md`.
 
-- **2. `rake ~> 10.1` cannot start** — `bundle install`
-  succeeds with `rake 10.5.0`, but `bundle exec rake` raises
-  `LoadError: cannot load such file -- ostruct`, because
-  Ruby 4.0 no longer ships `ostruct` as a default gem.
-  Loosen the pin to current rake. `rdoc ~> 4.1` installs
-  (4.3.0), but whether `require 'rdoc/task'` in the Rakefile
-  works on Ruby 4 is untested, because rake fails first.
-  Check it once rake runs. Roadmap milestone 1.
 - **3. `mvdm.rb` cannot load `matrix`** — `bundle exec rspec`
   fails loading `spec_helper`: `cannot load such file --
   matrix` at `lib/measurable/mvdm.rb:48`. Declare `matrix`

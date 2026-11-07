@@ -6,10 +6,11 @@
 
 ## Conventions
 
-- **Commit attribution** — end commits with a co-author line naming the
-  contributing identity. Repositories may add local detail such as the
-  harness, client, model, or provider, but the commons do not require
-  any particular vendor, product, or runtime.
+- **Commit attribution** — the operator is the author of every commit,
+  the ones a tool makes included; an agent is never an author, only a
+  co-author, named in a trailer. Repositories may add local detail such
+  as the harness, client, model, or provider, but the commons do not
+  require any particular vendor, product, or runtime.
 - **Memory protocol** — identity lives in the files, not the session;
   continuity is written, not remembered.
 
@@ -44,12 +45,15 @@ Continuity is a discipline of the files, not a property of the session.
 
 ### Commit attribution
 
-Contributions from a non-human collaborator are credited by commit
-attribution. The local repository may define the exact trailer format.
-At minimum, the line names the contributing identity; when useful, it
-may also name the harness, client, model family, provider, or version.
-The commons intentionally stay neutral about those implementation
-details.
+The author of a commit is the operator: git's configured user, who is
+responsible for the change. This holds for a commit an agent makes at
+the keyboard and for one a tool makes across many repositories. An
+agent is never the author, and no tool sets `--author` to an agent's
+name. The agent's contribution is credited by a co-author trailer. The
+local repository may define the exact trailer format. At minimum, the
+line names the contributing identity; when useful, it may also name
+the harness, client, model family, provider, or version. The commons
+intentionally stay neutral about those implementation details.
 
 Examples:
 
@@ -88,3 +92,18 @@ Keep shell invocations simple enough to inspect. Avoid long `&&`
 chains that mix setup, mutation, verification, and reporting in one
 line; split the work into named scripts, make targets, or separate
 commands so failures have a clear boundary.
+
+### Scratch and temporary files
+
+Use `/tmp/<project-name>/` for scratch work and temporary files,
+where `<project-name>` is the repository's directory name. Keep
+each task's files in a uniquely named subdirectory to avoid
+collisions with concurrent work.
+
+This predictable location lets the operator pre-approve access
+and makes temporary work easy to identify and clean up.
+
+When finished, remove the temporary files and task subdirectory
+you created. Save any results needed for review or future work
+in their appropriate permanent location before cleanup. Leave
+other tasks' and agents' files alone.
